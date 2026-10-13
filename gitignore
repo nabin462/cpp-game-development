@@ -1,0 +1,7 @@
+Compile executables
+*.exe
+Object file
+*.O
+*.obj
+Build Output
+Shoter-game/build/
