@@ -1,7 +1,7 @@
 Compile executables
 *.exe
 Object file
-*.O
+*.o
 *.obj
 Build Output
-Shoter-game/build/
+/build/
