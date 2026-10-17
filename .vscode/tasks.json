@@ -10,6 +10,7 @@
 		"-g",
 		"${workspaceFolder}\\Shoter-game\\Src\\main.cpp",
 "${workspaceFolder}\\Shoter-game\\Src\\player.cpp",
+"${workspaceFolder}\\Shoter-game\\Src\\bullet.cpp",
 		"-o",
 		"${fileDirname}\\${fileBasenameNoExtension}.exe",
 		"-lraylib",

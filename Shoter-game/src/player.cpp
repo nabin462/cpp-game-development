@@ -18,8 +18,23 @@ void Player::Update(){
     if(IsKeyDown(KEY_D)){
         x+=3;
     }
-    if(x+width/2<GetScreenWidth()){
+    if(x<0){
         x=0;
-        x+4;
+        
+    }
+  
+    if(y<0){
+y=0;
+
+    }
+
+
+      if(x+width>GetScreenWidth()){
+        x=GetScreenWidth()-width;
+    }
+
+    
+    if(y+height>GetScreenHeight()){
+        y=GetScreenHeight()-height;
     }
 }
