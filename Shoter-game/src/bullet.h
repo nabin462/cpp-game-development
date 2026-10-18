@@ -5,10 +5,13 @@ class bullet{
     public:
     void Draw();
     void update();
-    bullet(){
-        x=300;
-        y=200;
+    bullet(int a,int b){
+        x=a;
+        y=b;
         speed=5;
-        radius=20;
+        radius=30;
+    }
+    int GetY(){
+        return y;
     }
 };

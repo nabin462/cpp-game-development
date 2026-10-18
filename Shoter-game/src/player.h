@@ -11,5 +11,11 @@ class Player{
     height=100;
     speed=5.5;
 }
+int GetX(){
+    return x;
+}
+int GetY(){
+    return y;
+}
 
 };
