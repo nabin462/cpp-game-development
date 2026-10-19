@@ -1,4 +1,5 @@
 #include"bullet.h"
+#include"enemy.h"
 #include<iostream>
 #include"player.h"
 #include"raylib.h"
@@ -6,8 +7,9 @@ using namespace std;
 #include<vector>
 vector<bullet>bullets;
 int main(){
+    Enemy e;
     Player p;
-    bullet b(p.GetX()+40,p.GetY());
+   // bullet b(p.GetX()+40,p.GetY());
 
     InitWindow(800,800,"My shoter game");
     SetTargetFPS(60);
@@ -29,8 +31,9 @@ int main(){
         bullets[i].Draw();
      }
         }
-        
-        
+
+        e.update();
+        e.Draw();
         p.Draw();
        
         EndDrawing();
