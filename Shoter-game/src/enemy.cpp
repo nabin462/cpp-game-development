@@ -3,9 +3,12 @@
 #include<raylib.h>
 using namespace std;
 void Enemy::Draw(){
+    if(Getali()){
     DrawRectangle(x,y,width,height,RED);
+    }
 }
 void Enemy::update(){
+    if(Getali()){
     x=x+speed;
 
   if(x+width>GetScreenWidth())
@@ -16,5 +19,6 @@ void Enemy::update(){
 
     speed=-speed;
     }
+}
   
 }

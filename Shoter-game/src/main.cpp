@@ -28,6 +28,10 @@ int main(){
         --i;
      }
      else{
+        Vector2 position={bullets[i].Getx(),bullets[i].GetY()};
+        if(CheckCollisionCircleRec(position,bullets[i].Getradius(),e.rectangle())){
+            e.destroy();
+        }
         bullets[i].Draw();
      }
         }

@@ -14,4 +14,11 @@ class bullet{
     int GetY(){
         return y;
     }
+   int Getx(){
+    return x;
+
+    }
+    int Getradius(){
+        return radius;
+    }
 };
