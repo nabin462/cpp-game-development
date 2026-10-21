@@ -4,9 +4,9 @@ class Enemy{
     float speed;
     bool alive;
     public:
-    Enemy(){
-        x=40;
-        y=30;
+    Enemy(int a,int b){
+        x=a;
+        y=b;
         width=100;
         height=80;
         speed=5.5;
