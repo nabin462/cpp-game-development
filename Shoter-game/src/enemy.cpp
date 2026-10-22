@@ -1,6 +1,7 @@
 #include<iostream>
 #include"enemy.h"
 #include<raylib.h>
+#include<cstdlib>
 using namespace std;
 void Enemy::Draw(){
     if(Getali()){
@@ -9,16 +10,13 @@ void Enemy::Draw(){
 }
 void Enemy::update(){
     if(Getali()){
-    x=x+speed;
+    y=y+speed;
 
-  if(x+width>GetScreenWidth())
+  if(y+height>GetScreenHeight())
     {
-        speed=-speed;
+        y=0;x=rand()%760;
     }
-    if(x<0){
-
-    speed=-speed;
-    }
+   
 }
   
 }

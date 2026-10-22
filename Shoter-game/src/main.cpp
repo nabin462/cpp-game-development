@@ -3,14 +3,18 @@
 #include<iostream>
 #include"player.h"
 #include"raylib.h"
+#include<cstdlib>
+#include<ctime>
 using namespace std;
 #include<vector>
 vector<bullet>bullets;
 vector<Enemy>Enemys;
+int score=0;
 int main(){
-    Enemy e1(40,10);
-    Enemy e2(100,200);
-    Enemy e3(200,400);
+    srand(time(0));
+    Enemy e1(rand()%760,10);
+    Enemy e2(rand()%760,200);
+    Enemy e3(rand()%760,50);
     Enemys.push_back(e1);
      Enemys.push_back(e2);
       Enemys.push_back(e3);
@@ -44,6 +48,7 @@ int main(){
             Enemys[j].destroy();
             bullets.erase(bullets.begin()+i);
             --i;
+            score+=1;
             hit =true;
             break;
         }
@@ -54,6 +59,7 @@ int main(){
      }
     }
         }
+
         for(int i=0;i<Enemys.size();i++){
 
         Enemys[i].update();
@@ -61,6 +67,7 @@ int main(){
 
         }
         p.Draw();
+        DrawText(TextFormat("score:%i",score),10,10,30,WHITE);
        
         EndDrawing();
 
