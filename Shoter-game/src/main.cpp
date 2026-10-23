@@ -24,9 +24,12 @@ int main(){
 
     InitWindow(800,800,"My shoter game");
     SetTargetFPS(60);
+    double lastDamageTime=3;
+    double damageCoolDown=1;
     while(!WindowShouldClose()){
         BeginDrawing();
         ClearBackground(BLACK);
+        if(p.Health()>0){
        p.Update();
 
         if(IsKeyPressed(KEY_SPACE)){
@@ -58,7 +61,18 @@ int main(){
        bullets[i].Draw();
      }
     }
+
+    
         }
+      
+        for(int i=0;i<Enemys.size();i++){
+            if(Enemys[i].Getali()&&CheckCollisionRecs(p.rectangle(),Enemys[i].rectangle())&&GetTime()-lastDamageTime>=damageCoolDown){
+                
+                p.TakeDamage();
+                lastDamageTime=GetTime();
+            }
+        }
+
 
         for(int i=0;i<Enemys.size();i++){
 
@@ -68,6 +82,13 @@ int main(){
         }
         p.Draw();
         DrawText(TextFormat("score:%i",score),10,10,30,WHITE);
+        DrawText(TextFormat("Health:%i",p.Health()),30,50,30,WHITE);
+    }
+        if(p.Health()==0){
+            DrawText("GAME OVER", 300,400,100,RED);
+
+        }
+    
        
         EndDrawing();
 
