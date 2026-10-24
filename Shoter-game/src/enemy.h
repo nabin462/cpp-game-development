@@ -12,6 +12,7 @@ class Enemy{
         speed=5.5;
         alive=true;
     }
+    void resetEnemy();
     void Draw();
     void update();
     int GETx(){

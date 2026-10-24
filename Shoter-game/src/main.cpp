@@ -10,11 +10,19 @@ using namespace std;
 vector<bullet>bullets;
 vector<Enemy>Enemys;
 int score=0;
+enum GameState{
+    Menu,
+    Playing,
+    Game_Over,
+
+};
 int main(){
+   GameState gameState=Menu;
+    
     srand(time(0));
-    Enemy e1(rand()%760,10);
-    Enemy e2(rand()%760,200);
-    Enemy e3(rand()%760,50);
+    Enemy e1(rand()%760,rand()%400);
+    Enemy e2(rand()%760,rand()%400);
+    Enemy e3(rand()%760,rand()%400);
     Enemys.push_back(e1);
      Enemys.push_back(e2);
       Enemys.push_back(e3);
@@ -28,8 +36,15 @@ int main(){
     double damageCoolDown=1;
     while(!WindowShouldClose()){
         BeginDrawing();
+        if(gameState==Menu){
+            DrawText("MY SHOTER GAME",250,0,40,WHITE);
+            DrawText("PRESS ENTER TO STARE",300,50,30,WHITE);
+            if(IsKeyPressed(KEY_ENTER)){
+                gameState=Playing;
+            }
+        }
         ClearBackground(BLACK);
-        if(p.Health()>0){
+        if(p.Health()>0&&gameState==Playing){
        p.Update();
 
         if(IsKeyPressed(KEY_SPACE)){
@@ -85,9 +100,27 @@ int main(){
         DrawText(TextFormat("Health:%i",p.Health()),30,50,30,WHITE);
     }
         if(p.Health()==0){
-            DrawText("GAME OVER", 300,400,100,RED);
-
+            
+            gameState=Game_Over;
         }
+            if(gameState==Game_Over){
+                DrawText("GAME OVER!", 200,400,50,RED);
+            }
+
+            if(gameState==Game_Over&&IsKeyPressed(KEY_R)){
+           p.Reset();
+           for(int i=0;i<Enemys.size();i++){
+            Enemys[i].resetEnemy();
+           }
+
+          bullets.clear();
+           score=0;
+           gameState=Playing;
+        }
+        
+           
+
+        
     
        
         EndDrawing();

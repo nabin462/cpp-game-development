@@ -9,3 +9,7 @@ void bullet::Draw(){
 void bullet::update(){
    y=y-speed;
 }
+void bullet::resetbullet(){
+    x=240;
+    y=300;
+}

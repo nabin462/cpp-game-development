@@ -11,6 +11,8 @@ class bullet{
         speed=5;
         radius=30;
     }
+
+    void resetbullet();
     int GetY(){
         return y;
     }

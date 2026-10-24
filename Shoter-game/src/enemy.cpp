@@ -3,6 +3,11 @@
 #include<raylib.h>
 #include<cstdlib>
 using namespace std;
+void Enemy::resetEnemy(){
+    
+      x=rand()%760;
+      y=rand()%400;
+}
 void Enemy::Draw(){
     if(Getali()){
     DrawRectangle(x,y,width,height,RED);

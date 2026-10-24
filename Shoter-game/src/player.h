@@ -18,6 +18,14 @@ int Health(){
     return health;
 }
 
+void Reset(){
+    
+       health=100;
+       x=400;
+       y=300;
+    
+}
+
 void TakeDamage(){
     if(health>0){
 
