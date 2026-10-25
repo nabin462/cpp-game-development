@@ -14,10 +14,15 @@ enum GameState{
     Menu,
     Playing,
     Game_Over,
+    Pasued,
 
 };
+ 
+
+
 int main(){
    GameState gameState=Menu;
+
     
     srand(time(0));
     Enemy e1(rand()%760,rand()%400);
@@ -36,6 +41,23 @@ int main(){
     double damageCoolDown=1;
     while(!WindowShouldClose()){
         BeginDrawing();
+          
+        ClearBackground(BLACK);
+        if(IsKeyPressed(KEY_P)){
+            if(gameState==Playing){
+                gameState=Pasued;
+            }
+            else if(gameState==Pasued){
+            gameState=Playing;
+                }
+        }
+
+        if(gameState==Pasued){
+            DrawText("PAUSED", 150, 100, 50, YELLOW);
+                     DrawText("press p to resume",150,200,30,WHITE);
+        }
+        
+       
         if(gameState==Menu){
             DrawText("MY SHOTER GAME",250,0,40,WHITE);
             DrawText("PRESS ENTER TO STARE",300,50,30,WHITE);
@@ -43,7 +65,8 @@ int main(){
                 gameState=Playing;
             }
         }
-        ClearBackground(BLACK);
+
+      
         if(p.Health()>0&&gameState==Playing){
        p.Update();
 
