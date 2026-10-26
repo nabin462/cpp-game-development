@@ -22,6 +22,11 @@ enum GameState{
 
 int main(){
    GameState gameState=Menu;
+   Rectangle resumeButton={300,350,200,60};
+     Rectangle quitButton={300,280,200,60};
+     Rectangle pauseButton={580,0,200,60};
+     Rectangle enterButton={280,300,200,60};
+     Rectangle reStart={250,480,200,60};
 
     
     srand(time(0));
@@ -43,28 +48,43 @@ int main(){
         BeginDrawing();
           
         ClearBackground(BLACK);
-        if(IsKeyPressed(KEY_P)){
-            if(gameState==Playing){
-                gameState=Pasued;
-            }
-            else if(gameState==Pasued){
-            gameState=Playing;
-                }
-        }
-
-        if(gameState==Pasued){
-            DrawText("PAUSED", 150, 100, 50, YELLOW);
-                     DrawText("press p to resume",150,200,30,WHITE);
-        }
-        
-       
         if(gameState==Menu){
             DrawText("MY SHOTER GAME",250,0,40,WHITE);
-            DrawText("PRESS ENTER TO STARE",300,50,30,WHITE);
-            if(IsKeyPressed(KEY_ENTER)){
+              DrawRectangleRec(enterButton,BLUE);
+        DrawText("ENTER",300 ,310 , 30, YELLOW);
+       // DrawRectangleRec(pauseButton,BLUE);
+       // DrawText("PASUED",590,10,30,WHITE);
+            if(CheckCollisionPointRec(GetMousePosition(),enterButton)&&IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
                 gameState=Playing;
             }
+           
         }
+        if(gameState==Playing){
+            DrawRectangleRec(pauseButton,BLUE);
+       DrawText("PASUED",590,10,30,WHITE);
+
+        }
+        
+        if(CheckCollisionPointRec(GetMousePosition(),pauseButton)&&IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
+              gameState=Pasued;
+        }
+        if(gameState==Pasued){
+            DrawRectangleRec(resumeButton,BLUE);
+                    DrawText("RESUME",350,360,30,WHITE);
+                    DrawRectangleRec(quitButton,BLUE);
+                     DrawText("QUIT",380,290,30,WHITE);
+                      if(CheckCollisionPointRec(GetMousePosition(),quitButton)&&IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
+            CloseWindow();
+
+        }
+
+          if(CheckCollisionPointRec(GetMousePosition(),resumeButton)&&IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
+    
+                    gameState=Playing;
+     }
+                    
+        }
+    
 
       
         if(p.Health()>0&&gameState==Playing){
@@ -128,9 +148,12 @@ int main(){
         }
             if(gameState==Game_Over){
                 DrawText("GAME OVER!", 200,400,50,RED);
+                DrawRectangleRec(reStart,BLUE);
+                DrawText("Restart",260,490,30,WHITE);
             }
 
-            if(gameState==Game_Over&&IsKeyPressed(KEY_R)){
+            if(gameState==Game_Over){
+                if(CheckCollisionPointRec(GetMousePosition(),reStart)&&IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
            p.Reset();
            for(int i=0;i<Enemys.size();i++){
             Enemys[i].resetEnemy();
@@ -139,6 +162,7 @@ int main(){
           bullets.clear();
            score=0;
            gameState=Playing;
+        }
         }
         
            
