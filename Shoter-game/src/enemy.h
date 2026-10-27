@@ -40,6 +40,9 @@ class Enemy{
     void destroy(){
         alive=false;
     }
+    float setSpeed(float speed){
+        return  this->speed=speed;
+    }
 
 
 };

@@ -28,6 +28,9 @@ int main(){
      Rectangle enterButton={280,300,200,60};
      Rectangle reStart={250,480,200,60};
 
+     float spawnTimer=0.0f;
+     float spawnInterval=2.0f;
+
     
     srand(time(0));
     Enemy e1(rand()%760,rand()%400);
@@ -44,21 +47,34 @@ int main(){
     SetTargetFPS(60);
     double lastDamageTime=3;
     double damageCoolDown=1;
+    bool hover=true;
     while(!WindowShouldClose()){
         BeginDrawing();
           
         ClearBackground(BLACK);
+
         if(gameState==Menu){
+           
             DrawText("MY SHOTER GAME",250,0,40,WHITE);
               DrawRectangleRec(enterButton,BLUE);
         DrawText("ENTER",300 ,310 , 30, YELLOW);
-       // DrawRectangleRec(pauseButton,BLUE);
-       // DrawText("PASUED",590,10,30,WHITE);
             if(CheckCollisionPointRec(GetMousePosition(),enterButton)&&IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
                 gameState=Playing;
+                 
             }
            
         }
+        if(CheckCollisionPointRec(GetMousePosition(),enterButton)){
+            if(hover){
+                DrawRectangleRec(enterButton,RED);
+                 DrawText("ENTER",300 ,310 , 30, YELLOW);
+            }
+            else{
+                DrawRectangleRec(enterButton,BLUE);
+            }
+        }
+
+
         if(gameState==Playing){
             DrawRectangleRec(pauseButton,BLUE);
        DrawText("PASUED",590,10,30,WHITE);
@@ -88,6 +104,28 @@ int main(){
 
       
         if(p.Health()>0&&gameState==Playing){
+            spawnTimer+=GetFrameTime();
+            if(spawnTimer>=spawnInterval){
+                Enemy e4(rand()%760,0);
+                  if(score>=15){
+                e4.setSpeed(10.5);
+            }
+        
+       else if(score>=10){
+               e4.setSpeed(8.5);
+            }
+
+       else if(score>=5){  
+            e4.setSpeed(6.5);
+        }
+        else if (score<5){
+              e4.setSpeed(5.5);
+        }
+
+                Enemys.push_back(e4);
+                spawnTimer=0.0f;
+            
+            }
        p.Update();
 
         if(IsKeyPressed(KEY_SPACE)){
@@ -164,7 +202,32 @@ int main(){
            gameState=Playing;
         }
         }
+
+         if(score>=15){
+            for(int i=0;i<Enemys.size();i++){
+                Enemys[i].setSpeed(10.5);
+            }
+        }
+         
+       else if(score>=10){
+            for(int i=0;i<Enemys.size();i++){
+                Enemys[i].setSpeed(8.5);
+            }
+        }
+
+       else if(score>=5){
+            for(int i=0;i<Enemys.size();i++){
+                Enemys[i].setSpeed(6.5);
+            }
+        }
+        else if (score<5){
+            for(int i=0;i<Enemys.size();i++){
+                Enemys[i].setSpeed(5.5);
+            }
+        }
+       
         
+           
            
 
         
