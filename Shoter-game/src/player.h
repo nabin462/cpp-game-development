@@ -2,6 +2,7 @@
 class Player{
     int x,y,width,height,health;//X,Y are the player position, width and height is the player dimension
     float speed;//speed of player on the screen.
+    Texture2D texture;
     public:
      void Draw();//draw the player on the screen.
      void Update();//update the position of player on the screen
@@ -12,8 +13,11 @@ class Player{
     height=100;
     speed=5.5;
     health=100;
+    texture={0};
+   
 
 }
+void LoadPlayerTexture(const char* filename);
 int Health(){
     return health;
 }

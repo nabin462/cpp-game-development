@@ -21,6 +21,7 @@ enum GameState{
 
 
 int main(){
+        
    GameState gameState=Menu;
    Rectangle resumeButton={300,350,200,60};
      Rectangle quitButton={300,280,200,60};
@@ -39,21 +40,31 @@ int main(){
     Enemys.push_back(e1);
      Enemys.push_back(e2);
       Enemys.push_back(e3);
-    Player p;
+
     
-   // bullet b(p.GetX()+40,p.GetY());
+   
 
     InitWindow(800,800,"My shoter game");
     SetTargetFPS(60);
     double lastDamageTime=3;
     double damageCoolDown=1;
+
+      Player p;
+        p.LoadPlayerTexture("Shoter-game/assets/playerShip2_blue.png");
+          Texture2D bulletTexture =
+    LoadTexture("Shoter-game/assets/laserBlue06.png");
+        
+        
     bool hover=true;
+        
     while(!WindowShouldClose()){
         BeginDrawing();
           
         ClearBackground(BLACK);
+        
 
         if(gameState==Menu){
+           // DrawText("MENU STATE ACTIVE", 200, 100, 30, GREEN);
            
             DrawText("MY SHOTER GAME",250,0,40,WHITE);
               DrawRectangleRec(enterButton,BLUE);
@@ -64,7 +75,7 @@ int main(){
             }
            
         }
-        if(CheckCollisionPointRec(GetMousePosition(),enterButton)){
+        if(CheckCollisionPointRec(GetMousePosition(),enterButton)&&gameState==Menu){
             if(hover){
                 DrawRectangleRec(enterButton,RED);
                  DrawText("ENTER",300 ,310 , 30, YELLOW);
@@ -104,6 +115,7 @@ int main(){
 
       
         if(p.Health()>0&&gameState==Playing){
+            //DrawText("PLAYER DRAW CODE REACHED", 100, 100, 20, GREEN);
             spawnTimer+=GetFrameTime();
             if(spawnTimer>=spawnInterval){
                 Enemy e4(rand()%760,0);
@@ -130,9 +142,11 @@ int main(){
 
         if(IsKeyPressed(KEY_SPACE)){
             bullet b(p.GetX()+40,p.GetY());
+        
             bullets.push_back(b);
         }
         for(int i=0;i<bullets.size();i++){
+          
      bullets[i].update();
      if(bullets[i].GetY()<0){
         bullets.erase(bullets.begin()+i);

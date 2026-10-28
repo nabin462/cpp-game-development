@@ -1,8 +1,23 @@
 #include"player.h"
 #include"raylib.h"
+void Player::LoadPlayerTexture(const char* filename){
+    texture=LoadTexture(filename);
 
+  
+
+}
 void Player::Draw(){
-    DrawRectangle(x,y,width,height,WHITE);
+    //DrawRectangle(x,y,width,height,WHITE);
+    // DrawRectangle(x, y, width, height, GREEN);
+   DrawTexturePro(
+
+    texture,
+    Rectangle{0, 0, (float)texture.width, (float)texture.height},
+    Rectangle{(float)x, (float)y, (float)width, (float)height},
+    Vector2{0, 0},
+    0.0f,
+    WHITE
+);
 }
 void Player::Update(){
     if(IsKeyDown(KEY_W)){
