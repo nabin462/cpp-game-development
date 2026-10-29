@@ -51,9 +51,10 @@ int main(){
 
       Player p;
         p.LoadPlayerTexture("Shoter-game/assets/playerShip2_blue.png");
-          Texture2D bulletTexture =
-    LoadTexture("Shoter-game/assets/laserBlue06.png");
-        
+          Texture2D bulletTexture = LoadTexture("Shoter-game/assets/laserBlue06.png");
+          Texture2D enemyTexture=LoadTexture("Shoter-game/assets/enemyRed2.png");
+   
+ 
         
     bool hover=true;
         
@@ -61,6 +62,7 @@ int main(){
         BeginDrawing();
           
         ClearBackground(BLACK);
+        
         
 
         if(gameState==Menu){
@@ -119,6 +121,7 @@ int main(){
             spawnTimer+=GetFrameTime();
             if(spawnTimer>=spawnInterval){
                 Enemy e4(rand()%760,0);
+                e4.enemyTextureload(enemyTexture);
                   if(score>=15){
                 e4.setSpeed(10.5);
             }
@@ -141,7 +144,7 @@ int main(){
        p.Update();
 
         if(IsKeyPressed(KEY_SPACE)){
-            bullet b(p.GetX()+40,p.GetY());
+            bullet b(p.GetX()+40,p.GetY(), bulletTexture);
         
             bullets.push_back(b);
         }
@@ -150,6 +153,7 @@ int main(){
      bullets[i].update();
      if(bullets[i].GetY()<0){
         bullets.erase(bullets.begin()+i);
+
         --i;
         continue;
      }
@@ -185,6 +189,7 @@ int main(){
 
 
         for(int i=0;i<Enemys.size();i++){
+            Enemys[i].enemyTextureload(enemyTexture);
 
         Enemys[i].update();
         Enemys[i].Draw();

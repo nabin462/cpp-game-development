@@ -4,15 +4,17 @@
 using namespace std;
 void bullet::Draw(){
     //DrawCircle(x,y,radius,BLUE);
-  // DrawTexture(texture,x-radius,y-radius,WHITE);
+ //  DrawTexture(bulletTexture,x-radius,y-radius,WHITE);
 DrawTexturePro(
-    texture,
-    Rectangle{0, 0, (float)texture.width, (float)texture.height},
+    bulletTexture,
+    Rectangle{0, 0, (float)bulletTexture.width, (float)bulletTexture.height},
     Rectangle{(float)x - radius, (float)y - radius,
               (float)(radius * 2), (float)(radius * 2)},
     Vector2{0, 0},
     0.0f,
     WHITE
+
+    
 );
 }
 void bullet::update(){

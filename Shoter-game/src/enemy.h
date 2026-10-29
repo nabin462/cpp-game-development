@@ -3,6 +3,7 @@ class Enemy{
     int x,y,width,height;
     float speed;
     bool alive;
+    Texture2D enemyTexture;
     public:
     Enemy(int a,int b){
         x=a;
@@ -11,7 +12,9 @@ class Enemy{
         height=80;
         speed=5.5;
         alive=true;
+        enemyTexture={0};
     }
+    void enemyTextureload(Texture2D texture);
     void resetEnemy();
     void Draw();
     void update();

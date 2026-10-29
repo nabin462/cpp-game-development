@@ -1,3 +1,4 @@
+#include<raylib.h>
 class bullet{
     private:
     int x,y,radius;
@@ -6,12 +7,12 @@ class bullet{
     public:
     void Draw();
     void update();
-    bullet(int a,int b,Texture2D bulletTexture){
+    bullet(int a,int b,Texture2D texture){
         x=a;
         y=b;
         speed=5;
-        radius=30; 
-        this->bulletTexture=bulletTexture;
+        radius=6; 
+        bulletTexture=texture;
     }
 
 
