@@ -45,6 +45,8 @@ int main(){
    
 
     InitWindow(800,800,"My shoter game");
+    InitAudioDevice();
+    Sound laserSound=LoadSound("Shoter-game/assets//sfx_laser2.ogg");
     SetTargetFPS(60);
     double lastDamageTime=3;
     double damageCoolDown=1;
@@ -144,9 +146,11 @@ int main(){
        p.Update();
 
         if(IsKeyPressed(KEY_SPACE)){
+            
             bullet b(p.GetX()+40,p.GetY(), bulletTexture);
         
             bullets.push_back(b);
+            PlaySound(laserSound);
         }
         for(int i=0;i<bullets.size();i++){
           
@@ -255,6 +259,8 @@ int main(){
         EndDrawing();
 
     }
+    UnloadSound(laserSound);
+    CloseAudioDevice();
     CloseWindow();
 
     return 0;
