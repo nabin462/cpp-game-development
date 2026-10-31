@@ -12,6 +12,7 @@
 "${workspaceFolder}\\Shoter-game\\Src\\player.cpp",
 "${workspaceFolder}\\Shoter-game\\Src\\bullet.cpp",
 "${workspaceFolder}\\Shoter-game\\Src\\enemy.cpp",
+"${workspaceFolder}\\Shoter-game\\Src\\explosion.cpp",
 		"-o",
 		"${fileDirname}\\${fileBasenameNoExtension}.exe",
 		"-lraylib",

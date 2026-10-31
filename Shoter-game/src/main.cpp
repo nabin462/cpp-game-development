@@ -5,10 +5,13 @@
 #include"raylib.h"
 #include<cstdlib>
 #include<ctime>
+#include"explosion.h"
+#include<memory>
 using namespace std;
 #include<vector>
 vector<bullet>bullets;
 vector<Enemy>Enemys;
+vector<unique_ptr<Explosion>>explosions;
 int score=0;
 enum GameState{
     Menu,
@@ -55,6 +58,9 @@ int main(){
         p.LoadPlayerTexture("Shoter-game/assets/playerShip2_blue.png");
           Texture2D bulletTexture = LoadTexture("Shoter-game/assets/laserBlue06.png");
           Texture2D enemyTexture=LoadTexture("Shoter-game/assets/enemyRed2.png");
+          for(int i = 0; i < Enemys.size(); i++){
+    Enemys[i].enemyTextureload(enemyTexture);
+}
    
  
         
@@ -143,7 +149,7 @@ int main(){
                 spawnTimer=0.0f;
             
             }
-       p.Update();
+     
 
         if(IsKeyPressed(KEY_SPACE)){
             
@@ -152,6 +158,18 @@ int main(){
             bullets.push_back(b);
             PlaySound(laserSound);
         }
+
+         for(int i=0;i<Enemys.size();i++){
+            //Enemys[i].enemyTextureload(enemyTexture);
+
+        Enemys[i].update();
+        Enemys[i].Draw();
+
+        }
+
+
+
+
         for(int i=0;i<bullets.size();i++){
           
      bullets[i].update();
@@ -164,8 +182,17 @@ int main(){
      else{
         Vector2 position={bullets[i].Getx(),bullets[i].GetY()};
         bool hit =false;
+       
         for(int j=0;j<Enemys.size();j++){
         if(Enemys[j].Getali()&&CheckCollisionCircleRec(position,bullets[i].Getradius(),Enemys[j].rectangle())){
+            explosions.push_back(
+        std::make_unique<Explosion>(
+    Enemys[j].GETx() + Enemys[j].Getwidth() / 2 ,
+    Enemys[j].GETY() + Enemys[j].Getheight() / 2 
+
+         )
+    
+);
             Enemys[j].destroy();
             bullets.erase(bullets.begin()+i);
             --i;
@@ -192,13 +219,19 @@ int main(){
         }
 
 
-        for(int i=0;i<Enemys.size();i++){
-            Enemys[i].enemyTextureload(enemyTexture);
+       
+           p.Update();
+        for(int i = 0; i < explosions.size(); i++){
+    explosions[i]->Update();
 
-        Enemys[i].update();
-        Enemys[i].Draw();
-
-        }
+    if(explosions[i]->IsFinished()){
+        explosions.erase(explosions.begin() + i);
+        --i;
+    }
+    else{
+        explosions[i]->Draw();
+    }
+}
         p.Draw();
         DrawText(TextFormat("score:%i",score),10,10,30,WHITE);
         DrawText(TextFormat("Health:%i",p.Health()),30,50,30,WHITE);
