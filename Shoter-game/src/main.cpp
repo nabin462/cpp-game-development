@@ -53,6 +53,7 @@ int main(){
     SetTargetFPS(60);
     double lastDamageTime=3;
     double damageCoolDown=1;
+    Texture2D loadBackground=LoadTexture("Shoter-game/assets/blue.png");
 
       Player p;
         p.LoadPlayerTexture("Shoter-game/assets/playerShip2_blue.png");
@@ -70,6 +71,14 @@ int main(){
         BeginDrawing();
           
         ClearBackground(BLACK);
+        DrawTexturePro(
+    loadBackground,
+    Rectangle{0, 0, (float)loadBackground.width, (float)loadBackground.height},
+    Rectangle{0, 0, 800, 800},
+    Vector2{0, 0},
+    0.0f,
+    WHITE
+);
         
         
 
