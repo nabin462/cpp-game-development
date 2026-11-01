@@ -20,6 +20,10 @@ enum GameState{
     Pasued,
 
 };
+float shakeDuration = 0.0f;
+float shakeIntensity = 8.0f;
+Vector2 shakeOffset = {0, 0};
+Camera2D camera={0};
  
 
 
@@ -43,13 +47,18 @@ int main(){
     Enemys.push_back(e1);
      Enemys.push_back(e2);
       Enemys.push_back(e3);
-
-    
+      float backgroundY=0.0f;
+      float backgroundspeed=100.0f;
    
 
     InitWindow(800,800,"My shoter game");
+    camera.offset = {0, 0};
+camera.target = {0, 0};
+camera.rotation = 0.0f;
+camera.zoom = 1.0f;
     InitAudioDevice();
     Sound laserSound=LoadSound("Shoter-game/assets//sfx_laser2.ogg");
+    Sound enemyExplosion=LoadSound("Shoter-game/assets/explosionCrunch_000.ogg");
     SetTargetFPS(60);
     double lastDamageTime=3;
     double damageCoolDown=1;
@@ -68,17 +77,45 @@ int main(){
     bool hover=true;
         
     while(!WindowShouldClose()){
+        backgroundY+=backgroundspeed*GetFrameTime();
+        if(shakeDuration > 0)
+{
+    shakeDuration -= GetFrameTime();
+
+    shakeOffset.x = (float)GetRandomValue(-shakeIntensity, shakeIntensity);
+    shakeOffset.y = (float)GetRandomValue(-shakeIntensity, shakeIntensity);
+}
+else
+{
+    shakeOffset = {0, 0};
+}
         BeginDrawing();
           
         ClearBackground(BLACK);
-        DrawTexturePro(
+        camera.offset = shakeOffset;
+BeginMode2D(camera);
+    DrawTexturePro(
     loadBackground,
     Rectangle{0, 0, (float)loadBackground.width, (float)loadBackground.height},
-    Rectangle{0, 0, 800, 800},
+    Rectangle{0, (float)backgroundY, 800, 800},
     Vector2{0, 0},
     0.0f,
     WHITE
 );
+
+DrawTexturePro(
+    loadBackground,
+    Rectangle{0, 0, (float)loadBackground.width, (float)loadBackground.height},
+    Rectangle{0, (float)backgroundY - 800, 800, 800},
+    Vector2{0, 0},
+    0.0f,
+    WHITE
+);
+
+if(backgroundY >= 800)
+{
+    backgroundY = 0;
+}
         
         
 
@@ -94,6 +131,7 @@ int main(){
             }
            
         }
+
         if(CheckCollisionPointRec(GetMousePosition(),enterButton)&&gameState==Menu){
             if(hover){
                 DrawRectangleRec(enterButton,RED);
@@ -206,6 +244,7 @@ int main(){
             bullets.erase(bullets.begin()+i);
             --i;
             score+=1;
+            PlaySound(enemyExplosion);
             hit =true;
             break;
         }
@@ -223,6 +262,7 @@ int main(){
             if(Enemys[i].Getali()&&CheckCollisionRecs(p.rectangle(),Enemys[i].rectangle())&&GetTime()-lastDamageTime>=damageCoolDown){
                 
                 p.TakeDamage();
+                shakeDuration=0.2f;
                 lastDamageTime=GetTime();
             }
         }
@@ -301,6 +341,8 @@ int main(){
         EndDrawing();
 
     }
+    EndMode2D();
+    UnloadSound(enemyExplosion);
     UnloadSound(laserSound);
     CloseAudioDevice();
     CloseWindow();

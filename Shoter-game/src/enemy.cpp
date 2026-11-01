@@ -19,7 +19,7 @@ void Enemy::Draw(){
 
     enemyTexture,
     Rectangle{0, 0, (float)enemyTexture.width, (float)enemyTexture.height},
-    Rectangle{(float)x, (float)y, (float)width, (float)height},
+    Rectangle{(float)x, (float)y, (float)width*0.5f, (float)height*0.5f},
     Vector2{0, 0},
     0.0f,
     WHITE
@@ -32,7 +32,7 @@ void Enemy::update(){
     if(Getali()){
     y=y+speed;
 
-  if(y+height>GetScreenHeight())
+  if(y+height*0.5f>GetScreenHeight())
     {
         y=0;x=rand()%760;
     }
